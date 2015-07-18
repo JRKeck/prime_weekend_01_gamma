@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Employee Report</title>
+		<!-- Bootstrap CSS -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<!-- Custom CSS -->
+		<link href="style.css" rel="stylesheet">
+	</head>
+	<body>
+		<h1 class="text-center">Employee Report</h1>
+		<div class="form col-md-5">
+
+			<form class="employee-form form-horizontal">
+			  <div class="form-group">
+			    <label for="fname" class="col-sm-3 col-md-4 control-label">First Name</label>
+			    <div class="col-sm-6 col-md-8">
+			      <input type="text" class="form-control" id="fname" placeholder="First Name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="lname" class="col-sm-3 col-md-4 control-label">Last Name</label>
+			    <div class="col-sm-6 col-md-8">
+			      <input type="text" class="form-control" id="lname" placeholder="Last Name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="empnum" class="col-sm-3 col-md-4 control-label">Employeee Number</label>
+			    <div class="col-sm-6 col-md-8">
+			      <input type="text" class="form-control" id="empnum" placeholder="Employee Number">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="title" class="col-sm-3 col-md-4 control-label">Title</label>
+			    <div class="col-sm-6 col-md-8">
+			      <input type="text" class="form-control" id="title" placeholder="Title">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="review" class="col-sm-3 col-md-4 control-label">Last Review Score</label>
+			    <div class="col-sm-6 col-md-8">
+			      <input type="number" min="1" max="5" class="form-control" id="review" placeholder="Last Review Score">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="salary" class="col-sm-3 col-md-4 control-label">Salary</label>
+			    <div class="col-sm-6 col-md-8">
+			      <input type="text" class="form-control" id="salary" placeholder="Salary">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-md-offset-3 col-sm-offset-3 col-md-10">
+			      <button type="submit" class="btn btn-primary">Submit</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		<div class="results col-md-6 col-md-offset-1">
+			<div class="total-comp">Total Employee Compensation: <span class="total-comp-num">$0</span></div> 
+			<table class="table">
+			  <thead>
+			  	<tr>
+			  		<td>First</td>
+			  		<td>Last</td>
+			  		<td>Employee Number</td>
+			  		<td>Title</td>
+			  		<td>Review Score</td>
+			  		<td>Salary</td>
+			  		<td></td>
+			  	</tr>
+			  </thead>
+			  <tbody>
+			  </tbody>
+			</table>
+		</div>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
