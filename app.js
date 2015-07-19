@@ -57,8 +57,17 @@ $(document).ready(function() {
 			$('.employee-table > tbody  > tr').each(function() {
 				compareFname = $(this).children().first().text()
 				compareLname = $(this).children().first().next().text();
-				if (compareLname > passedObj.lname) {
-					console.log(compareLname + " is greater than " + passedObj.lname + ", place "+ passedObj.lname +" before");
+				if (compareLname == passedObj.lname) {
+					console.log("Last Name Match");
+					if (compareFname >= passedObj.fname) {
+						console.log(compareFname + " is greater than or equal to " + passedObj.fname + ", place "+ passedObj.fname +" before");
+						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+						added = true;
+						return false;
+					}
+				}
+				else if (compareLname >= passedObj.lname) {
+					console.log(compareLname + " is greater than or equal to " + passedObj.lname + ", check First name");
 					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
 					added = true;
 					return false;
@@ -86,12 +95,13 @@ $(document).ready(function() {
 	}
 	//Random employee constructor
 	function Person (){
-		var firstName = ["Josh", "Bill"];
-		var lastName = ["Keck", "Dwyer"];
+		var firstName = ["Josh", "Bill", "Steve", "Scott", "Dan", "Greg", "Joan", "Caroline", "Lauren", "Sara", "Susan"];
+		var lastName = ["Anderson", "Simpson", "Smith", "Peterson", "Schultz", "Williams", "Henderson"];
+		var title = ["Business Analyst", "Marketing", "Sales", "Human Resources", "Accounting"]
 		this.fname = firstName[randomNumber(0,(firstName.length-1))]
 		this.lname = lastName[randomNumber(0,(lastName.length-1))]
 		this.empnum = randomNumber(1,100);
-		this.title = "title";
+		this.title = title[randomNumber(0,(title.length-1))];
 		this.review = randomNumber(1,5);
 		this.salary = randomNumber(35000,150000);
 	}
