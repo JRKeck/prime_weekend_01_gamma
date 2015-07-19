@@ -2,8 +2,6 @@ $(document).ready(function() {
 	var totalSalary = 0;
 	var employeeSalary = 0;
 	var rowCounter = 0;
-	console.log(totalSalary);
-
 	//Place form inputs into formObj and call addRow
 	$(".employee-form").submit(function(event){
 		event.preventDefault();
@@ -18,12 +16,12 @@ $(document).ready(function() {
 		$( ".employee-form" ).each(function(){
 		    this.reset();
 		});
-		if (rowCounter <= 0) {
-			addRow(formObj);
-		}
-		else {
-			addRowAlpha(formObj);
-		}
+		addRowAlpha(formObj);
+	});
+	//Generate random employee
+	$('.gen-random').on('click', function() {
+		var randomEmployee = new Person();
+		addRowAlpha(randomEmployee)
 	});
 	//Remove a row by clicking on x
 	$("body").on('click', '.remove-row', function() {
@@ -32,25 +30,24 @@ $(document).ready(function() {
 		redeuceSalary(employeeSalary);
 		rowCounter--;
 	});
-	//Adds a row to the list
-	function addRow(formObj) {
-		$(".results tbody").append("<tr><td>"+formObj.fname+"</td><td>"+formObj.lname+"</td><td>"+formObj.empnum+"</td><td>"+formObj.title+"</td><td data-review='"+formObj.review+"'>"+formObj.review+"</td><td>"+formObj.salary+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
-		addSalary(formObj.salary);
-		rowCounter++;
-	}
 	//Adds a row in alphabetical order
-	function addRowAlpha(formObj) {
+	function addRowAlpha(passedObj) {
 		var added;
-		$('.employee-table > tbody  > tr').each(function() {
-			if ($(this).children().first().next().text() > formObj.lname) {
-				$(this).before("<tr><td>"+formObj.fname+"</td><td>"+formObj.lname+"</td><td>"+formObj.empnum+"</td><td>"+formObj.title+"</td><td data-review='"+formObj.review+"'>"+formObj.review+"</td><td>"+formObj.salary+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
-				added = true;
+		if (rowCounter <= 0) {
+			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+passedObj.salary+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+		}
+		else {
+			$('.employee-table > tbody  > tr').each(function() {
+				if ($(this).children().first().next().text() > passedObj.lname) {
+					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+passedObj.salary+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+					added = true;
+					return false;
+				}
+			});
+			if (!added) {$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+passedObj.salary+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
 			}
-
-		});
-		if (!added) {$(".results tbody").append("<tr><td>"+formObj.fname+"</td><td>"+formObj.lname+"</td><td>"+formObj.empnum+"</td><td>"+formObj.title+"</td><td data-review='"+formObj.review+"'>"+formObj.review+"</td><td>"+formObj.salary+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
-}
-	
+		}
+		addSalary(passedObj.salary);
 		rowCounter++;
 	}
 	//increase total salary
@@ -65,6 +62,18 @@ $(document).ready(function() {
 		totalSalary -= salary;
 		$('.total-comp-num').text(totalSalary);
 	}
-
-
+	//Random Employee Generator
+	function randomNumber(min, max) {
+		return Math.floor(Math.random() * (1 + max - min) + min);
+	}
+	function Person (){
+		var firstName = ["Josh"]
+		var lastName = ["KecK"];
+		this.fname = firstName[randomNumber(0,(firstName.length-1))]
+		this.lname = lastName[randomNumber(0,(lastName.length-1))]
+		this.empnum = randomNumber(1,100);
+		this.title = "title";
+		this.review = randomNumber(1,5);
+		this.salary = randomNumber(35000,200000);
+	}
 });
