@@ -29,6 +29,7 @@ $(document).ready(function() {
 		formObj.review = reviewRadioVal;
 		//Check for characters in salary
 		formObj.salary = removeNonNumberic(formObj.salary);
+		if (!formObj.salary) {formObj.salary = 0;}
 
 		addRowAlpha(formObj);
 	});
@@ -41,6 +42,7 @@ $(document).ready(function() {
 	$("body").on('click', '.remove-row', function() {
 		$(this).closest('tr').remove();
 		employeeSalary = $(this).parent().prev().text();
+		employeeSalary = removeNonNumberic(employeeSalary);
 		reduceSalary(employeeSalary);
 		rowCounter--;
 	});
