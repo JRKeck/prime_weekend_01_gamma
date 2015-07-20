@@ -56,19 +56,19 @@ $(document).ready(function() {
 				compareLname = $(this).children().first().next().text();
 				if (compareLname == passedObj.lname) {
 					if (compareFname >= passedObj.fname) {
-						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
+						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'><span>"+passedObj.review+"</span></td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 						added = true;
 						return false;
 					}
 				}
 				else if (compareLname >= passedObj.lname) {
-					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
+					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'><span>"+passedObj.review+"</span></td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 					added = true;
 					return false;
 				}
 			});
 			if (!added) {
-				$(".results tbody > tr").last().after("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
+				$(".results tbody > tr").last().after("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'><span>"+passedObj.review+"</span></td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 			}
 		}
 		addSalary(passedObj.salary);
