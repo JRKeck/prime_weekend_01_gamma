@@ -1,11 +1,10 @@
 $(document).ready(function() {
-	var totalSalary = 0;
-	var employeeSalary = 0;
-	var rowCounter = 0;
-	var reviewRadioVal;
-	//Place form inputs into formObj and call addRow
+	var totalSalary = 0; //keep track of total salaries added to the list
+	var employeeSalary = 0; //Holds the salary of the employee being removed
+	var rowCounter = 0; //Check for a empty table
+	var reviewRadioVal; //Radio button value so it doesn't get overwritten by .each()
+	//Place form inputs into formObj and call addRowAlpha
 	$(".employee-form").submit(function(event){
-		//TODO: have to capitalize names and sanitize numbers
 
 		event.preventDefault();
 
@@ -14,33 +13,31 @@ $(document).ready(function() {
 
 		$inputs.each(function(){
 			formObj[this.id] = $(this).val();
-			//prevent the radio button value from being overwritten by the loop
+			//prevent the radio button value from being overwritten by the loop and stor it in
 			if ($(this).is(':checked')) { reviewRadioVal = $(this).val();};
 		});
-
 		$( ".employee-form" ).each(function(){
 		    this.reset();
 		});
-
-		//Make sure the names are capitallized
+		//Make sure the names are capitallized for alphabetical purposes
 		formObj.fname = formObj.fname.charAt(0).toUpperCase() + formObj.fname.substring(1);
 		formObj.lname = formObj.lname.charAt(0).toUpperCase() + formObj.lname.substring(1);
-		//Get our radio value
+		//insert the form radio value in the object
 		formObj.review = reviewRadioVal;
 		//Check for characters in salary
 		formObj.salary = removeNonNumberic(formObj.salary);
 		if (!formObj.salary) {formObj.salary = 0;}
-
 		addRowAlpha(formObj);
 	});
-	//Generate random employee
+	//Generate random employee and put into an Object and call addRowAlpha
 	$('.gen-random').on('click', function() {
 		var randomEmployee = new Person();
 		addRowAlpha(randomEmployee)
 	});
-	//Remove a row by clicking on x
+	//Remove a row by clicking on button
 	$("body").on('click', '.remove-row', function() {
-		$(this).closest('tr').remove();
+		$(this).removeClass('.remove-row');
+		$(this).closest('tr').fadeOut('fast');
 		employeeSalary = $(this).parent().prev().text();
 		employeeSalary = removeNonNumberic(employeeSalary);
 		reduceSalary(employeeSalary);
@@ -50,32 +47,27 @@ $(document).ready(function() {
 	function addRowAlpha(passedObj) {
 		var added;
 		if (rowCounter <= 0) {
-			console.log("No other rows, append row");
-			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
 		}
 		else {
 			$('.employee-table > tbody  > tr').each(function() {
 				compareFname = $(this).children().first().text()
 				compareLname = $(this).children().first().next().text();
 				if (compareLname == passedObj.lname) {
-					console.log("Last Name Match");
 					if (compareFname >= passedObj.fname) {
-						console.log(compareFname + " is greater than or equal to " + passedObj.fname + ", place "+ passedObj.fname +" before");
-						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
 						added = true;
 						return false;
 					}
 				}
 				else if (compareLname >= passedObj.lname) {
-					console.log(compareLname + " is greater than or equal to " + passedObj.lname + ", check First name");
-					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
 					added = true;
 					return false;
 				}
 			});
 			if (!added) {
-				console.log("Didn't find a place to insert, append row");
-				$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+				$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
 			}
 		}
 		addSalary(passedObj.salary);

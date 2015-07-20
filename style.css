@@ -6,6 +6,7 @@ h1 {
 .total-comp {
 	padding: 8px;
 	font-size: 110%;
+	font-weight: bold;
 }
 [data-review] {
 	color: #fff;
