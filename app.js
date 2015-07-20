@@ -36,8 +36,7 @@ $(document).ready(function() {
 	});
 	//Remove a row by clicking on button
 	$("body").on('click', '.remove-row', function() {
-		$(this).removeClass('.remove-row');
-		$(this).closest('tr').fadeOut('fast');
+		$(this).closest('tr').remove();
 		employeeSalary = $(this).parent().prev().text();
 		employeeSalary = removeNonNumberic(employeeSalary);
 		reduceSalary(employeeSalary);
@@ -47,7 +46,7 @@ $(document).ready(function() {
 	function addRowAlpha(passedObj) {
 		var added;
 		if (rowCounter <= 0) {
-			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
+			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'><span>"+passedObj.review+"</span></td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
 		}
 		else {
 			$('.employee-table > tbody  > tr').each(function() {
@@ -55,19 +54,19 @@ $(document).ready(function() {
 				compareLname = $(this).children().first().next().text();
 				if (compareLname == passedObj.lname) {
 					if (compareFname >= passedObj.fname) {
-						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
+						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
 						added = true;
 						return false;
 					}
 				}
 				else if (compareLname >= passedObj.lname) {
-					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
+					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
 					added = true;
 					return false;
 				}
 			});
 			if (!added) {
-				$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn("fast");
+				$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
 			}
 		}
 		addSalary(passedObj.salary);
