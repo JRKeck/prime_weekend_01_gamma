@@ -3,6 +3,7 @@ $(document).ready(function() {
 	var employeeSalary = 0; //Holds the salary of the employee being removed
 	var rowCounter = 0; //Check for a empty table
 	var reviewRadioVal; //Radio button value so it doesn't get overwritten by .each()
+	
 	//Place form inputs into formObj and call addRowAlpha
 	$(".employee-form").submit(function(event){
 
@@ -36,8 +37,9 @@ $(document).ready(function() {
 	});
 	//Remove a row by clicking on button
 	$("body").on('click', '.remove-row', function() {
-		$(this).closest('tr').remove();
 		employeeSalary = $(this).parent().prev().text();
+		$(this).closest('tr').fadeOut("fast");
+		$(this).removeClass('remove-row');//prevent a double click which reduces total salary twice
 		employeeSalary = removeNonNumberic(employeeSalary);
 		reduceSalary(employeeSalary);
 		rowCounter--;
@@ -46,7 +48,7 @@ $(document).ready(function() {
 	function addRowAlpha(passedObj) {
 		var added;
 		if (rowCounter <= 0) {
-			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'><span>"+passedObj.review+"</span></td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+			$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'><span>"+passedObj.review+"</span></td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 		}
 		else {
 			$('.employee-table > tbody  > tr').each(function() {
@@ -54,19 +56,19 @@ $(document).ready(function() {
 				compareLname = $(this).children().first().next().text();
 				if (compareLname == passedObj.lname) {
 					if (compareFname >= passedObj.fname) {
-						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+						$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 						added = true;
 						return false;
 					}
 				}
 				else if (compareLname >= passedObj.lname) {
-					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+					$(this).before("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 					added = true;
 					return false;
 				}
 			});
 			if (!added) {
-				$(".results tbody").append("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>");
+				$(".results tbody > tr").last().after("<tr><td>"+passedObj.fname+"</td><td>"+passedObj.lname+"</td><td>"+passedObj.empnum+"</td><td>"+passedObj.title+"</td><td data-review='"+passedObj.review+"'>"+passedObj.review+"</td><td>"+formatToDollars(passedObj.salary)+"</td><td><button class='remove-row btn-danger btn-xs'><i class='fa fa-times'></i></button></td></tr>").hide().fadeIn(500);
 			}
 		}
 		addSalary(passedObj.salary);
