@@ -40,6 +40,9 @@ $(document).ready(function() {
 		employeeSalary = $(this).parent().prev().text();
 		$(this).closest('tr').fadeOut("fast");
 		$(this).removeClass('remove-row');//prevent a double click which reduces total salary twice
+		$(this).closest('tr').promise().done(function() { //remove the row after fadeOut
+		    $(this).closest('tr').remove();
+		  });
 		employeeSalary = removeNonNumberic(employeeSalary);
 		reduceSalary(employeeSalary);
 		rowCounter--;
